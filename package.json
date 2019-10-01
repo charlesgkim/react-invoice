@@ -1,7 +1,7 @@
 {
-  "name": "react-simple-invoice-dev",
+  "name": "react-invoice-dev",
   "version": "1.0.0",
-  "homepage": "https://http://demo.firxworx.com/react-simple-invoice/",
+  "homepage": "http://localhost:3000",
   "private": true,
   "dependencies": {
     "node-sass": "^4.10.0",
