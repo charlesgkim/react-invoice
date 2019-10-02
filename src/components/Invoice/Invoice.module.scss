@@ -1,6 +1,7 @@
 @import 'Invoice';
 
 .invoice {
+  font-size: 13px;
   max-width: $invoiceMaxWidth;
   margin: ($rhythm * 2) auto;
   border: 1px solid $tableBorderColor;
@@ -40,7 +41,7 @@
     margin-left: $rhythm / 2;
     padding: 0;
     .value {
-      text-align: right;
+      text-align: left;
     }
   }
   .address {
@@ -115,7 +116,6 @@ button.payNow {
   .closing {
     padding-top: $rhythm;
   }
-
 }
 
 

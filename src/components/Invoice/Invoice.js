@@ -6,12 +6,23 @@ import LineItems from './LineItems'
 import uuidv4 from 'uuid/v4'
 
 class Invoice extends Component {
-
-  locale = 'en-GB'
-  currency = 'GBP'
-
   state = {
-    taxRate: 0.00,
+    companyName: 'DEEPEYES LTD',
+    companyAddress: '141 New Road, London',
+    companyRegNo: '10711452',
+    companyVatNo: '',
+    companyPostcode: 'E4 9EZ',
+    customerName: 'NAVIEN LTD',
+    customerAddress: 'Building 2, Ground Floor, Guildford Business Park, Guildford.',
+    customerPostcode: 'GU2 8XH',
+    locale: 'en-GB',
+    currency: 'GBP',
+    taxRate: 20.00,
+    paymentTerms: '7 days',
+    notes: 'Details of payment to be made via BACS. %Bank Details%',
+    footer: 'Registered in England and Wales No: ',
+    invoiceNo: '19-10-000',
+    invoiceDate: '02-10-2019',
     lineItems: [
       {
         id: 'initial',      // react-beautiful-dnd unique key
@@ -67,9 +78,9 @@ class Invoice extends Component {
   }
 
   formatCurrency = (amount) => {
-    return (new Intl.NumberFormat(this.locale, {
+    return (new Intl.NumberFormat(this.state.locale, {
       style: 'currency',
-      currency: this.currency,
+      currency: this.state.currency,
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     }).format(amount))
@@ -96,32 +107,23 @@ class Invoice extends Component {
 
       <div className={styles.invoice}>
         <div className={styles.brand}>
-          <img src="https://via.placeholder.com/150x50.png?text=logo" alt="Logo" className={styles.logo} />
-        </div>
+          <img src='https://via.placeholder.com/180x60.png?text=DEEP EYES LTD' alt="Logo" className={styles.logo} /><br />
+          {this.state.companyAddress} {this.state.companyPostcode}
+        </div>        
         <div className={styles.addresses}>
-          <div className={styles.from}>
-            <strong>NAVIEN LTD</strong><br />
-            Building 2, Ground Floor, Guildford Business Park,<br />
-            Guildford, UK. GU2 8XH<br />
-          </div>
           <div>
-            <div className={`${styles.valueTable} ${styles.to}`}>
+            <div className={`${styles.to}`}>
               <div className={styles.row}>
-                <div className={styles.label}>Customer No.</div>
-                <div className={styles.value}>NAVIEN</div>
+                <div className={`${styles.label} ${styles.value}`}><p>Invoice to: <strong>{this.state.customerName}</strong></p></div>
+                <div className={styles.value}>{this.state.customerAddress} {this.state.customerPostcode}</div>
               </div>
               <div className={styles.row}>
-                <div className={styles.label}>Invoice No.</div>
-                <div className={styles.value}>DE201910-001</div>
-              </div>
-              <div className={styles.row}>
-                <div className={styles.label}>Date</div>
-                <div className={`${styles.value} ${styles.date}`}>01-10-2019</div>
+                <div className={`${styles.value} ${styles.value} ${styles.date}`}><p>Date: {this.state.invoiceDate}</p></div>
               </div>
             </div>
           </div>
         </div>
-        <h2>Invoice</h2>
+        <h3>Invoice #{this.state.invoiceNo}</h3>
 
           <LineItems
             items={this.state.lineItems}
@@ -137,7 +139,7 @@ class Invoice extends Component {
           <form>
             <div className={styles.valueTable}>
               <div className={styles.row}>
-                <div className={styles.label}>Tax Rate (%)</div>
+                <div className={styles.label}>VAT Rate (%)</div>
                 <div className={styles.value}><input name="taxRate" type="number" step="0.01" value={this.state.taxRate} onChange={this.handleInvoiceChange} onFocus={this.handleFocusSelect} /></div>
               </div>
             </div>
@@ -149,7 +151,7 @@ class Invoice extends Component {
                 <div className={`${styles.value} ${styles.currency}`}>{this.formatCurrency(this.calcLineItemsTotal())}</div>
               </div>
               <div className={styles.row}>
-                <div className={styles.label}>Tax ({this.state.taxRate}%)</div>
+                <div className={styles.label}>VAT ({this.state.taxRate}%)</div>
                 <div className={`${styles.value} ${styles.currency}`}>{this.formatCurrency(this.calcTaxTotal())}</div>
               </div>
               <div className={styles.row}>
@@ -161,19 +163,18 @@ class Invoice extends Component {
         </div>
 
         <div className={styles.pay}>
-          <button className={styles.payNow} onClick={this.handlePayButtonClick}>Payment Terms: 7 Days</button>
+          <button className={styles.payNow} onClick={this.handlePayButtonClick}>Click here to save the invoice</button>
         </div>
 
         <div className={styles.footer}>
           <div className={styles.comments}>
             <h4>Notes</h4>
-            <p>Details of payment to be made via BACS. %Bank Details%</p>
+            <p>Payment Terms: {this.state.paymentTerms}. {this.state.notes}</p>
 
           </div>
           <div className={styles.closing}>
             <div>
-              <p>Invoice by <strong>DEEPEYES LIMITED</strong>, 141 New Road, London, UK, E4 9EZ</p>
-              <p>Registered in England and Wales Number: 10711452,</p>
+              <p>{this.state.companyName}, {this.state.companyAddress}. {this.state.companyPostcode}. {this.state.footer} {this.state.companyRegNo}</p>
             </div>
           </div>
         </div>
