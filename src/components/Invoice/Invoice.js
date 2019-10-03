@@ -111,17 +111,17 @@ class Invoice extends Component {
           {this.state.companyAddress} {this.state.companyPostcode}
         </div>        
         <div className={styles.addresses}>
-          <div>
+          <form>
             <div className={`${styles.to}`}>
               <div className={styles.row}>
-                <div className={`${styles.label} ${styles.value}`}><p>Invoice to: <strong>{this.state.customerName}</strong></p></div>
+                <div className={`${styles.label} ${styles.value}`}>Invoice to: <input name="CompanyName" type="text" step="0.01" value={this.state.customerName} onChange={this.handleInvoiceChange} onFocus={this.handleFocusSelect} /></div>
                 <div className={styles.value}>{this.state.customerAddress} {this.state.customerPostcode}</div>
               </div>
               <div className={styles.row}>
                 <div className={`${styles.value} ${styles.value} ${styles.date}`}><p>Date: {this.state.invoiceDate}</p></div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
         <h3>Invoice #{this.state.invoiceNo}</h3>
 
